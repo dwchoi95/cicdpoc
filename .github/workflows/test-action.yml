@@ -1,0 +1,33 @@
+name: Test CI/CD Plugin Runner
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Target name"
+        required: true
+        default: "sample-project"
+      mode:
+        description: "Execution mode"
+        required: true
+        default: "scan"
+
+jobs:
+  test-plugin:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run plugin action
+        id: plugin
+        uses: ./
+        with:
+          target: ${{ github.event.inputs.target }}
+          mode: ${{ github.event.inputs.mode }}
+
+      - name: Print outputs
+        run: |
+          echo "result=${{ steps.plugin.outputs.result }}"
+          echo "summary=${{ steps.plugin.outputs.summary }}"

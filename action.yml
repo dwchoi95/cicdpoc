@@ -1,0 +1,23 @@
+name: CI/CD Plugin Runner
+description: Run a sample CI/CD plugin PoC
+
+inputs:
+  target:
+    description: Target project or module name
+    required: true
+    default: sample-project
+
+  mode:
+    description: Execution mode
+    required: true
+    default: scan
+
+outputs:
+  result:
+    description: Execution result
+  summary:
+    description: Human-readable summary
+
+runs:
+  using: node20
+  main: dist/index.js
